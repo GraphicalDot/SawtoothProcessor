@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+
+message UserAccount {
+    string role=1;
+    string phone_number = 2;
+    string pancard = 3;
+    string user_id = 4;
+    string email = 5;
+    string first_name=7;
+    string last_name=8;
+    uint32 time=9; //when this float account transaction was created
+    string indian_time=10;
+    bool deactivate = 11;
+    string deactivate_on = 12;
+    repeated uint32 create_asset_idxs = 13 [packed=true];
+    repeated uint32 share_asset_idxs = 14 [packed=true];
+    repeated uint32 child_account_idxs = 15 [packed=true];
+    repeated string shared_secret = 16;
+    repeated Signatures authenticity_signatures= 17;
+    string public = 18;
+}
+
+
+message Signatures {
+    string address=1;
+    uint32 nonce=2;
+    string signed_nonce=3;
+    string nonce_hash=4;
+
+}

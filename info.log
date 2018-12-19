@@ -1,0 +1,33 @@
+2018-10-12 18:20:38,074 - main.py -root - INFO - This is the validator connection tcp://localhost:4004 at which this processor will try to connect
+2018-10-12 18:20:38,139 - core.py -sawtooth_sdk.processor.core - INFO - register attempt: OK
+2018-10-12 18:54:21,809 - core.py -sawtooth_sdk.processor.core - DEBUG - received message of type: TP_PROCESS_REQUEST
+2018-10-12 18:54:21,810 - core.py -sawtooth_sdk.processor.core - WARNING - Invalid Transaction Transaction payload type unknown.
+2018-10-12 18:57:21,624 - core.py -sawtooth_sdk.processor.core - DEBUG - received message of type: TP_PROCESS_REQUEST
+2018-10-12 18:57:21,625 - core.py -sawtooth_sdk.processor.core - WARNING - Invalid Transaction Transaction payload type unknown.
+2018-10-12 18:57:47,827 - core.py -sawtooth_sdk.processor.core - DEBUG - received message of type: TP_PROCESS_REQUEST
+2018-10-12 18:57:47,828 - core.py -sawtooth_sdk.processor.core - WARNING - Invalid Transaction Transaction payload type unknown.
+2018-10-12 18:58:59,794 - core.py -sawtooth_sdk.processor.core - DEBUG - received message of type: TP_PROCESS_REQUEST
+2018-10-12 18:58:59,795 - core.py -sawtooth_sdk.processor.core - WARNING - Invalid Transaction Transaction payload type unknown.
+2018-10-12 18:59:36,130 - core.py -sawtooth_sdk.processor.core - DEBUG - received message of type: TP_PROCESS_REQUEST
+2018-10-12 18:59:36,131 - core.py -sawtooth_sdk.processor.core - WARNING - Invalid Transaction Transaction payload type unknown.
+2018-10-12 18:59:44,160 - core.py -sawtooth_sdk.processor.core - DEBUG - received message of type: TP_PROCESS_REQUEST
+2018-10-12 18:59:44,161 - asset_creation.py -root - DEBUG - Signer public key and zeroth public key is 022a1eb4050ccc1269f50a97a6d1e4a248b181551b47aea126db8c7c4db9ecac1e
+2018-10-12 18:59:44,161 - asset_creation.py -root - DEBUG - THe asset child public key is 
+2018-10-12 18:59:44,161 - asset_creation.py -root - DEBUG - THe asset is 
+2018-10-12 20:23:29,605 - main.py -root - INFO - This is the validator connection tcp://localhost:4004 at which this processor will try to connect
+2018-10-12 20:23:29,616 - core.py -sawtooth_sdk.processor.core - INFO - register attempt: OK
+2018-10-12 20:23:29,617 - core.py -sawtooth_sdk.processor.core - DEBUG - received message of type: TP_PROCESS_REQUEST
+2018-10-12 20:23:29,618 - asset_creation.py -root - DEBUG - Signer public key and zeroth public key is 022a1eb4050ccc1269f50a97a6d1e4a248b181551b47aea126db8c7c4db9ecac1e
+2018-10-12 20:23:29,618 - asset_creation.py -root - DEBUG - THe asset child public key is 
+2018-10-12 20:23:29,619 - asset_creation.py -root - DEBUG - THe asset is 
+2018-10-13 17:04:57,380 - main.py -root - INFO - This is the validator connection tcp://localhost:4004 at which this processor will try to connect
+2018-10-13 17:04:57,464 - core.py -sawtooth_sdk.processor.core - INFO - register attempt: OK
+2018-10-13 17:32:00,612 - core.py -sawtooth_sdk.processor.core - DEBUG - received message of type: TP_PROCESS_REQUEST
+2018-10-13 17:32:00,613 - core.py -sawtooth_sdk.processor.core - WARNING - Invalid Transaction Transaction payload type unknown.
+2018-10-13 17:32:56,251 - core.py -sawtooth_sdk.processor.core - DEBUG - received message of type: PING_REQUEST
+2018-10-13 17:34:11,998 - core.py -sawtooth_sdk.processor.core - DEBUG - received message of type: TP_PROCESS_REQUEST
+2018-10-13 17:34:11,999 - core.py -sawtooth_sdk.processor.core - WARNING - Invalid Transaction Transaction payload type unknown.
+2018-10-13 17:34:20,040 - core.py -sawtooth_sdk.processor.core - DEBUG - received message of type: TP_PROCESS_REQUEST
+2018-10-13 17:34:20,040 - asset_creation.py -root - DEBUG - Signer public key and zeroth public key is 02124351de0ec2c4cd6c50818b1475adb1909a72545f80e2e58c358261c90ae7e1
+2018-10-13 17:34:20,041 - asset_creation.py -root - DEBUG - THe asset child public key is 
+2018-10-13 17:34:20,041 - asset_creation.py -root - DEBUG - THe asset is 
