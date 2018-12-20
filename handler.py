@@ -25,6 +25,7 @@ from ledger.assets.create_asset import asset_creation
 from ledger.assets.transfer_asset import transfer_asset_creation
 from ledger.assets.share_asset import share_asset_creation
 from ledger.assets.receive_asset import receive_asset_creation
+from ledger.mnemonics.share_mnemonics import share_mnemonic_creation
 #from holding import holding_creation
 #from offer import offer_acceptance
 #from offer import offer_closure
@@ -32,6 +33,7 @@ from ledger.assets.receive_asset import receive_asset_creation
 from marketplace_payload import MarketplacePayload
 from marketplace_state import MarketplaceState
 from ledger.accounts.users import user_state
+from ledger.mnemonics.share_mnemonics import share_mnemonic_state
 import logging
 import traceback
 #coloredlogs.install()
@@ -59,6 +61,7 @@ class MarketplaceHandler(TransactionHandler):
         """
         state = MarketplaceState(context=context, timeout=3)
         userstate = user_state.UserState(context=context, timeout=3)
+        mnemonic_state = share_mnemonic_state.MnemonicState(context=context, timeout=3)
         payload = MarketplacePayload(payload=transaction.payload)
         try:
             if payload.is_organization_account(): #check if the transaction si actually a create_account transaction
@@ -83,6 +86,14 @@ class MarketplaceHandler(TransactionHandler):
                     payload.create_user_account(),
                     header=transaction.header,
                     state=userstate)
+
+            elif payload.is_share_secret():
+                logging.info("Creating new Share Secret")
+                share_mnemonic_creation.create_share_mnemonic(
+                    payload.create_share_secret(),
+                    header=transaction.header,
+                    state=mnemonic_state)
+
 
             elif payload.is_child_account():
                 logging.info("Creating new Child Account")

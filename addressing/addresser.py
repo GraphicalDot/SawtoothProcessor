@@ -131,7 +131,7 @@ class AddressSpace(enum.IntEnum):
 
 
 
-def shared_secret_address(public, index):
+def share_secret_address(public, index):
 
     index_hex = '{:08x}'.format(index)
     full_hash = _hash(public)

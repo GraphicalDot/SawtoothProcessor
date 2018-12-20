@@ -52,6 +52,17 @@ class MarketplacePayload(object):
         user_account = payload_pb2.TransactionPayload.CREATE_USER_ACCOUNT
         return self._transaction.payload_type == user_account
 
+    def create_share_secret(self):
+        #logging.debug(f"This is the create float account  payload in \
+        #TransactionPayload {self._transaction.create_float_account}")
+        return self._transaction.share_secret
+
+
+    def is_share_secret(self):
+        share_secret = payload_pb2.TransactionPayload.SHARE_SECRET
+        return self._transaction.payload_type == share_secret
+
+
 
     def create_child_account(self):
         #logging.debug(f"This is the create float account  payload in \
