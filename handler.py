@@ -26,6 +26,8 @@ from ledger.assets.transfer_asset import transfer_asset_creation
 from ledger.assets.share_asset import share_asset_creation
 from ledger.assets.receive_asset import receive_asset_creation
 from ledger.mnemonics.share_mnemonics import share_mnemonic_creation
+from ledger.mnemonics.activate_shares import activate_shares_creation
+from ledger.mnemonics.execute_share import execute_shares_creation
 #from holding import holding_creation
 #from offer import offer_acceptance
 #from offer import offer_closure
@@ -94,7 +96,20 @@ class MarketplaceHandler(TransactionHandler):
                     header=transaction.header,
                     state=mnemonic_state)
 
+            elif payload.is_activate_shares():
+                logging.info("Creating new Activate Secret")
+                activate_shares_creation.create_activate_shares(
+                    payload.create_activate_shares(),
+                    header=transaction.header,
+                    state=state)
 
+
+            elif payload.is_execute_shares():
+                logging.info("Executing a Share Secret Contract")
+                execute_shares_creation.create_execute_shares(
+                    payload.create_execute_shares(),
+                    header=transaction.header,
+                    state=state)
             elif payload.is_child_account():
                 logging.info("Creating new Child Account")
                 child_creation.handle_child(

@@ -11,6 +11,8 @@ def create_share_mnemonic(payload, header, state):
 
 
     user_account = state.get_user(payload.user_address)
+    #check whether who is floatin shared_mnemonic transactions are actually exists
+    ##on the blockchain.
     if not user_account:
         raise InvalidTransaction("User Account with public key {} dont exists "
                                  "exists".format(header.signer_public_key))

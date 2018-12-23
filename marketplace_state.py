@@ -102,7 +102,7 @@ class MarketplaceState(object):
     def get_user(self, public_key):
         try:
             address = addresser.user_address(
-                                        account_id=public_key,
+                                        public=public_key,
                                         index=0)
         except Exception as e:
             logging.error(e)
@@ -167,32 +167,11 @@ class MarketplaceState(object):
 
     def set_organization(self, public_key, account_payload):
         logging.info(account_payload)
-        if "" in [
-            account_payload.gst_number, account_payload.pancard,
-            account_payload.org_name]:
-            raise InvalidTransaction('shouldnt be left empty')
-
-        logging.info("Entered into set_Account with parent pub %s"%account_payload.parent_pub)
-        address = addresser.organization_address(
-                                        public=public_key, index=0)
-
-        logging.info("THis is the orgnization address {}".format(address))
-
-        if account_payload.role != "ADMIN":
-            #since ADMIN organization accoutn doest have a float_account transaction
-            ## there is no need to claim float_account
-            self.claim_float_account(account_payload.parent_pub, account_payload.parent_idx,
-                    public_key,
-                    account_payload.indian_time)
-
-            logging.info("Float account has been claimed ")
-
-
         #container = _get_account_container(self._state_entries, address)
 
+        address = addresser.organization_address(public_key, 0)
         organization = create_empty_organization()
         organization.public = public_key
-        organization.parent_zero_pub = account_payload.parent_zero_pub
         organization.user_id = account_payload.user_id
         organization.phone_number = account_payload.phone_number
         organization.pancard = account_payload.pancard
@@ -206,9 +185,6 @@ class MarketplaceState(object):
         organization.deactivate_on = account_payload.deactivate_on
 
         organization.role = account_payload.role
-        organization.parent_role = account_payload.parent_role
-        organization.float_account_address= account_payload.float_account_address
-
 
         if account_payload.create_asset_idxs:
             organization.create_asset_idxs.extend(account_payload.create_asset_idxs)

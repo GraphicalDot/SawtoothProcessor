@@ -29,29 +29,6 @@ def handle_organization(create_account, header, state):
         InvalidTransaction
             - The public key already exists for an Account.
     """
-    if create_account.role != "ADMIN":
-        ##because admin orgnization account will not have a float account
-        float_account = state.get_flt_account(public_key=create_account.parent_pub,
-                        index=create_account.parent_idx)
-
-
-        if float_account.claimed_by:
-
-            message = "This account has already been claimed by {}".format(float_account.claimed_by)
-            logging.error(message)
-            raise InvalidTransaction(message)
-
-    ##this means the float__account.claimed_by dshould have users zeroth public ker from
-    ##which account adddress must have been created
-    """
-    if float_account.claimed_by:
-        if float_account.claimed_by != header.signer_public_key:
-            message = "This account has been claimed by somebody else, FATAL error\
-                app shouldnt proceed"
-            logging.error(message)
-            raise InvalidTransaction(message)
-
-    """
 
     ##users zeroth public key has signed this transaction
     if state.get_organization(public_key=header.signer_public_key):

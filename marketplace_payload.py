@@ -62,7 +62,25 @@ class MarketplacePayload(object):
         share_secret = payload_pb2.TransactionPayload.SHARE_SECRET
         return self._transaction.payload_type == share_secret
 
+    def create_activate_shares(self):
+        #logging.debug(f"This is the create float account  payload in \
+        #TransactionPayload {self._transaction.create_float_account}")
+        return self._transaction.activate_secret
 
+
+    def is_activate_shares(self):
+        activate_secret = payload_pb2.TransactionPayload.ACTIVATE_SECRET
+        return self._transaction.payload_type == activate_secret
+
+    def create_execute_shares(self):
+        #logging.debug(f"This is the create float account  payload in \
+        #TransactionPayload {self._transaction.create_float_account}")
+        return self._transaction.execute_secret
+
+
+    def is_execute_shares(self):
+        execute_secret = payload_pb2.TransactionPayload.EXECUTE_SECRET
+        return self._transaction.payload_type == execute_secret
 
     def create_child_account(self):
         #logging.debug(f"This is the create float account  payload in \
