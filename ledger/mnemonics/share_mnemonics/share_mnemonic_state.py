@@ -67,10 +67,10 @@ class MnemonicState(object):
         return account
 
     def update_user_shared_secret_array(self, address, account, share_secret_address):
-        if share_secret_address in account.shared_secret:
+        if share_secret_address in account.share_secret_addresses:
             raise InvalidTransaction("Duplicacy in share_secret array of user")
 
-        account.shared_secret.append(share_secret_address)
+        account.share_secret_addresses.append(share_secret_address)
         print ("User account {}".format(account))
         return self._context.set_state(
             {address: account.SerializeToString()}, self._timeout)

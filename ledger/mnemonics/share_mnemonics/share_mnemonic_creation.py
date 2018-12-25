@@ -17,6 +17,8 @@ def create_share_mnemonic(payload, header, state):
         raise InvalidTransaction("User Account with public key {} dont exists "
                                  "exists".format(header.signer_public_key))
 
+    logging.info("THis is the user account {}".format(user_account))
+        
     try:
         state.shared_mnemonic_transaction(
             public_key=header.signer_public_key,
