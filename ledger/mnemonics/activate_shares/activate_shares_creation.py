@@ -1,4 +1,4 @@
-
+''
 
 
 from sawtooth_sdk.processor.exceptions import InvalidTransaction
@@ -6,7 +6,7 @@ import coloredlogs, logging
 coloredlogs.install()
 import hashlib
 from ledger import signatures
-from ledger.mnemonics.share_mnemonics import share_mnemonic_state
+#from ledger.mnemonics. import share_mnemonic_state
 
 def create_activate_shares(payload, header, state):
 

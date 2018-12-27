@@ -7,7 +7,7 @@ coloredlogs.install()
 import hashlib
 from ledger import signatures
 from addressing import addresser
-from ledger.mnemonics.share_mnemonics import share_mnemonic_state
+#from ledger.mnemonics.share_mnemonics import share_mnemonic_state
 
 def create_execute_shares(payload, header, state):
 

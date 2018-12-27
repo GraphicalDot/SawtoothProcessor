@@ -17,6 +17,7 @@ from addressing import addresser
 from protocompiled import user_pb2
 from protocompiled import share_secret_pb2
 from sawtooth_sdk.processor.exceptions import InvalidTransaction
+from .receive_secret.receive_secret_creation import ReceiveSecretState
 import base64
 import traceback
 import time
@@ -34,12 +35,13 @@ def create_empty_sig():
     return asset_pb2.Signatures()
 
 
-class MnemonicState(object):
+class SecretState(ReceiveSecretState):
 
     def __init__(self, context, timeout=2):
         self._context = context
         self._timeout = timeout
         self._state_entries = []
+        super().__init__(context, timeout)
 
     def get_user(self, address):
         ##entries will be a weird list of the form
