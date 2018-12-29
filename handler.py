@@ -25,7 +25,7 @@ from ledger.assets.create_asset import asset_creation
 from ledger.assets.transfer_asset import transfer_asset_creation
 from ledger.assets.share_asset import share_asset_creation
 from ledger.assets.receive_asset import receive_asset_creation
-from ledger.mnemonics.share_mnemonics import share_mnemonic_creation
+from ledger.mnemonics.share_secret import share_secret_creation
 from ledger.mnemonics.activate_shares import activate_shares_creation
 from ledger.mnemonics.execute_share import execute_shares_creation
 from ledger.mnemonics.receive_secret import receive_secret_creation
@@ -91,7 +91,7 @@ class MarketplaceHandler(TransactionHandler):
 
             elif payload.is_share_secret():
                 logging.info("Creating new Share Secret")
-                share_mnemonic_creation.create_share_mnemonic(
+                share_secret_creation.create_share_secret(
                     payload.create_share_secret(),
                     header=transaction.header,
                     state=mnemonic_state)
