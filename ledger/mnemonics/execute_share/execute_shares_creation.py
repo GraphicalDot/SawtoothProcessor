@@ -12,32 +12,37 @@ from addressing import addresser
 def create_execute_shares(payload, header, state):
 
     ##user weho was the owner of this shared_secret_address contract
-    user_account = state.get_user(header.signer_public_key)
-    if not user_account:
-        raise InvalidTransaction("User Account with public key {} dont exists "
-                                 "exists".format(header.signer_public_key))
+    ##TODO lots of things
+
+    share_secret = state.get_share_secret(payload.share_secret_address)
+    ##update implies whether the share_secret transaction needs to be updated
+    ##or insert a new one altoghether
+    if not share_secret:
+        raise InvalidTransaction("Share secret {} dont exists\
+                            ".format(payload.share_secret_address))
 
 
+
+    receive_secret = state.get_receive_secret(share_secret.ownership)
+    if not receive_secret:
+        raise InvalidTransaction("RECEIVE_SECRET with address {} dont exists"\
+                            .format(share_secret.ownership))
+
+
+    state.check_nonce_hash(payload.nonce, payload.nonce_hash)
     ##this will verify that this user is actually the owner who is sending
     ##this transaction, to updaet the secret with new key
-    if not signatures.ecdsa_signature_verify(header.signer_public_key,
+    if not signatures.ecdsa_signature_verify(receive_secret.public,
                             payload.signed_nonce,
                             payload.nonce):
         raise InvalidTransaction("Signatures with account public key coudnt be verified")
     else:
         logging.info("Signatures verified")
 
-
-    mnemonic_state = share_mnemonic_state.MnemonicState(context=state._context, timeout=3)
-    share_mnemonic = mnemonic_state.get_share_mnemonic(payload.shared_secret_address)
-
-    user_address = addresser.user_address(header.signer_public_key, 0)
-
-    if share_mnemonic.ownership !=user_address:
-        raise InvalidTransaction("This share secret contract is not owned by this user")
-
     try:
-            mnemonic_state.update_secret(payload)
+            state.update_reset_secret(
+                        share_secret=share_secret,
+                        payload=payload)
 
 
     except Exception as e:

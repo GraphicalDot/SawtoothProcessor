@@ -18,6 +18,8 @@ from protocompiled import user_pb2
 from sawtooth_sdk.processor.exceptions import InvalidTransaction
 from .receive_secret.receive_secret_creation import ReceiveSecretState
 from .share_secret.share_secret_creation import ShareSecretState
+from protocompiled import organization_account_pb2
+
 import base64
 import traceback
 import time
@@ -33,7 +35,8 @@ def empty_user():
 
 def create_empty_sig():
     return asset_pb2.Signatures()
-
+def create_empty_organization():
+    return organization_account_pb2.OrganizationAccount()
 
 class SecretState(ReceiveSecretState, ShareSecretState):
 
@@ -64,6 +67,25 @@ class SecretState(ReceiveSecretState, ShareSecretState):
             logging.info("Nonce hash matched")
         return
 
+    def account_at_address(self, address):
+
+        entries = self._context.get_state(
+            addresses=[address],
+            timeout=self._timeout)
+
+        try:
+            entry = entries[0]
+            logging.info("account data corresponding to \
+                            {} is {}".format(address, entry))
+        except Exception as e:
+            logging.info("account data corresponding to \
+                            {} is {}".format(address, None))
+            return False
+
+        account = create_empty_organization()
+        account.ParseFromString(entry.data)
+        return account
+
     def get_user(self, address):
         ##entries will be a weird list of the form
         ##[address: "318c9fa5d39e9ccd2769115795e384b8e83b3267172ae518136ac49ddc5adf71d87814"
@@ -90,19 +112,35 @@ class SecretState(ReceiveSecretState, ShareSecretState):
         return account
 
 
-    def update_reset_key(self, payload):
+    def update_reset_key(self, share_secret, payload):
         ##entries will be a weird list of the form
         ##[address: "318c9fa5d39e9ccd2769115795e384b8e83b3267172ae518136ac49ddc5adf71d87814"
         ##data: "\nB02dbf0f4a3defef38df754122ef7c10fee6a4bb363312367524f86d230e205d459\022$b6de5d5b-7870-49df-971e-0885986bfa96\032
         ##\006seller\"\021978-0-9956537-6-4*\0161-191-790-04532\r1-932866-82-5:\001\000"]
-        share_mnemonic = self.get_share_mnemonic(payload.share_secret_address)
-        if not share_mnemonic:
-            raise InvalidTransaction("The shared mnemonic contract doesnt exists")
 
-
-        share_mnemonic.reset_key = payload.reset_key
-        share_mnemonic.updated_on = payload.timestamp
-        share_mnemonic.active = True
+        share_secret.reset_key = payload.reset_key
+        share_secret.updated_on = payload.timestamp
+        share_secret.active = True
 
         return self._context.set_state(
-                    {payload.share_secret_address: share_mnemonic.SerializeToString()}, self._timeout)
+                    {payload.share_secret_address: share_secret.SerializeToString()}, self._timeout)
+
+
+
+    def update_reset_secret(self, share_secret, payload):
+        ##entries will be a weird list of the form
+        ##[address: "318c9fa5d39e9ccd2769115795e384b8e83b3267172ae518136ac49ddc5adf71d87814"
+        ##data: "\nB02dbf0f4a3defef38df754122ef7c10fee6a4bb363312367524f86d230e205d459\022$b6de5d5b-7870-49df-971e-0885986bfa96\032
+        ##\006seller\"\021978-0-9956537-6-4*\0161-191-790-04532\r1-932866-82-5:\001\000"]
+
+        share_secret.reset_secret = payload.reset_secret
+        share_secret.updated_on = payload.timestamp
+        share_secret.executed_on = payload.timestamp
+        share_secret.executed = True
+        if share_secret.num_executions:
+            share_secret.num_executions = share_secret.num_executions + 1
+        else:
+            share_secret.num_executions = 1
+
+        return self._context.set_state(
+                    {payload.share_secret_address: share_secret.SerializeToString()}, self._timeout)
