@@ -95,7 +95,15 @@ class MarketplacePayload(object):
 
 
 
+    def create_conclude_secret(self):
+        #logging.debug(f"This is the create float account  payload in \
+        #TransactionPayload {self._transaction.create_float_account}")
+        return self._transaction.conclude_secret
 
+
+    def is_conclude_secret(self):
+        conclude_secret = payload_pb2.TransactionPayload.CONCLUDE_SECRET
+        return self._transaction.payload_type == conclude_secret
 
 
 

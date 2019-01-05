@@ -144,3 +144,24 @@ class SecretState(ReceiveSecretState, ShareSecretState):
 
         return self._context.set_state(
                     {payload.share_secret_address: share_secret.SerializeToString()}, self._timeout)
+
+
+    def conclude_secret(self, share_secret, payload):
+        ##entries will be a weird list of the form
+        ##[address: "318c9fa5d39e9ccd2769115795e384b8e83b3267172ae518136ac49ddc5adf71d87814"
+        ##data: "\nB02dbf0f4a3defef38df754122ef7c10fee6a4bb363312367524f86d230e205d459\022$b6de5d5b-7870-49df-971e-0885986bfa96\032
+        ##\006seller\"\021978-0-9956537-6-4*\0161-191-790-04532\r1-932866-82-5:\001\000"]
+
+        share_secret.updated_on = payload.timestamp
+        share_secret.active = False
+        share_secret.recovered = True
+        share_secret.recovered_on = payload.timestamp
+
+        if share_secret.num_recoveries:
+            share_secret.num_recoveries = share_secret.num_recoveries + 1
+        else:
+            share_secret.num_recoveries = 1
+
+
+        return self._context.set_state(
+                    {payload.share_secret_address: share_secret.SerializeToString()}, self._timeout)

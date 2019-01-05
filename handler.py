@@ -29,6 +29,7 @@ from ledger.mnemonics.share_secret import share_secret_creation
 from ledger.mnemonics.activate_secret import activate_secret_creation
 from ledger.mnemonics.execute_share import execute_shares_creation
 from ledger.mnemonics.receive_secret import receive_secret_creation
+from ledger.mnemonics.conclude_secret import conclude_secret_creation
 #from offer import offer_acceptance
 #from offer import offer_closure
 #from offer import offer_creation
@@ -108,6 +109,13 @@ class MarketplaceHandler(TransactionHandler):
                 logging.info("Executing a Share Secret Contract")
                 execute_shares_creation.create_execute_shares(
                     payload.create_execute_shares(),
+                    header=transaction.header,
+                    state=mnemonic_state)
+
+            elif payload.is_conclude_secret():
+                logging.info("Executing a Conclude Secret Contract")
+                conclude_secret_creation.create_conclude_secret(
+                    payload.create_conclude_secret(),
                     header=transaction.header,
                     state=mnemonic_state)
 
