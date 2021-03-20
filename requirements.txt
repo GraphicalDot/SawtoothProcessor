@@ -13,7 +13,7 @@ configobj==5.0.6
 cryptography==1.7.2
 humanfriendly==4.17
 idna==2.0
-Jinja2==2.8
+Jinja2==2.11.3
 jsonpatch==1.10
 jsonpointer==1.9
 lmdb==0.92
