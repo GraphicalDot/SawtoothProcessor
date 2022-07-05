@@ -25,7 +25,7 @@ pipenv==2018.7.1
 prettytable==0.7.2
 protobuf==3.6.1
 pyasn1==0.1.9
-pycares==2.1.1
+pycares==4.2.0
 pycparser==2.19
 pycurl==7.43.0
 pyformance==0.4
